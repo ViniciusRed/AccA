@@ -23,7 +23,7 @@ android {
     }
     buildTypes {
         debug {
-            signingConfig null
+            signingConfig signingConfigs.debug
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
@@ -44,7 +44,8 @@ android {
         dataBinding true
         viewBinding true
     }
-    lintOptions {
+    namespace 'mattecarra.accapp'
+    lint {
         disable 'MissingTranslation'
     }
 }

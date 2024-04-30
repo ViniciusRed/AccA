@@ -7,6 +7,12 @@
 - [LICENSE](#license)
 - [LOCALIZATION](#localization)
 
+---
+# Warning 
+
+This app is broken fully after release ```2024.4.26-RC```
+
+Until release ```2024.4.17-RC``` it works partially because of the ACC changes
 
 ---
 ## DESCRIPTION
