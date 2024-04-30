@@ -11,6 +11,6 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-      - uses: Tokito-Kun/android-public-build@java17-debug
+      - uses: ViniciusRed/android-public-build@debug
         with:
             TG_TOKEN: ${{ secrets.TG_TOKEN }}
