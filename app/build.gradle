@@ -6,13 +6,13 @@ plugins {
 }
 
 android {
-    compileSdkVersion 33
     defaultConfig {
+        compileSdkVersion 34
         applicationId "mattecarra.accapp"
-        minSdkVersion 31
+        minSdkVersion 30
         targetSdkVersion 33
         versionCode 39
-        versionName "1.0.35"
+        versionName "1.0.36-dev"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
         multiDexEnabled true
@@ -58,11 +58,11 @@ dependencies {
     implementation "androidx.multidex:multidex:$versions.multidex"
 
     implementation "androidx.appcompat:appcompat:1.6.1"
-    implementation "androidx.core:core-ktx:1.10.1"
+    implementation "androidx.core:core-ktx:1.13.0"
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     implementation "androidx.legacy:legacy-support-v4:1.0.0"
     implementation "androidx.vectordrawable:vectordrawable:1.1.0"
-    implementation "androidx.preference:preference-ktx:1.2.0"
+    implementation "androidx.preference:preference-ktx:1.2.1"
     implementation "androidx.cardview:cardview:1.0.0"
 
     implementation 'com.afollestad.material-dialogs:core:3.3.0'
@@ -115,6 +115,6 @@ dependencies {
 
 
     // Fragment KTX module
-    implementation "androidx.fragment:fragment-ktx:1.6.0"
+    implementation "androidx.fragment:fragment-ktx:1.6.2"
 
 }

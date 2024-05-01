@@ -9,8 +9,8 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
-      - uses: Tokito-Kun/android-public-build@java17
+      - uses: actions/checkout@v4
+      - uses: ViniciusRed/android-public-build@Master
         with:
             token: ${{ secrets.GITHUB_TOKEN }}
             TG_TOKEN: ${{ secrets.TG_TOKEN }}
