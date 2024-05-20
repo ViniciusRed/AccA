@@ -11,8 +11,9 @@ import mattecarra.accapp.R
 import mattecarra.accapp.acc.Acc
 import mattecarra.accapp.utils.GithubUtils
 import java.io.File
+import java.util.Locale
 
-    @CheckResult
+@CheckResult
     fun MaterialDialog.shareLogsNeutralButton(file: File, extraTextRes: Int): MaterialDialog
     {
         return neutralButton(R.string.share) {
@@ -59,9 +60,11 @@ import java.io.File
 
         return listItemsSingleChoice(
             items = options,
-            initialSelection = if(optionValues.contains(accVersion)) optionValues.indexOf(accVersion) else options.map { it.toLowerCase() }.indexOf(accVersion)
+            initialSelection = if(optionValues.contains(accVersion)) optionValues.indexOf(accVersion) else options.map { it.lowercase(
+                Locale.getDefault()
+            ) }.indexOf(accVersion)
         ) { _, index, text ->
             if(index in optionValues.indices) { callback(optionValues[index]) }
-            else { callback(text.toString().toLowerCase()) }
+            else { callback(text.toString().lowercase(Locale.getDefault())) }
         }
     }

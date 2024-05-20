@@ -206,9 +206,9 @@ class BatteryInfoWidget : AppWidgetProvider()
                 val textSize = sp.getInt(swidgetId + WIDGET_TSIZE, 14)
                 val roundSize = sp.getInt(swidgetId + WIDGET_BROUND, 8)
                 val backgroundColor = sp.getInt(swidgetId + WIDGET_BCOLOR, Color.parseColor("#FFF5F5F5"))
-                val options: Bundle = AppWidgetManager.getInstance(context).getAppWidgetOptions(widgetId)
-                val mWidth = options.getInt(AppWidgetManager.OPTION_APPWIDGET_MAX_WIDTH, 100)
-                val mHeight = options.getInt(AppWidgetManager.OPTION_APPWIDGET_MAX_HEIGHT, 100)
+                val options: Bundle = getInstance(context).getAppWidgetOptions(widgetId)
+                val mWidth = options.getInt(OPTION_APPWIDGET_MAX_WIDTH, 100)
+                val mHeight = options.getInt(OPTION_APPWIDGET_MAX_HEIGHT, 100)
                 val gradient = GradientDrawable(GradientDrawable.Orientation.BOTTOM_TOP, intArrayOf(backgroundColor, backgroundColor))
 
                 gradient.shape = GradientDrawable.RECTANGLE
@@ -290,7 +290,7 @@ class BatteryInfoWidget : AppWidgetProvider()
     fun getAppWidgetIds(context: Context): IntArray
     {
         val thisAppWidgetComponentName = ComponentName(context.packageName, javaClass.name)
-        return AppWidgetManager.getInstance(context).getAppWidgetIds(thisAppWidgetComponentName)
+        return getInstance(context).getAppWidgetIds(thisAppWidgetComponentName)
     }
 
 }

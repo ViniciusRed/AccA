@@ -28,7 +28,7 @@ class SchedulesFragment : ScopedFragment(), OnScheduleClickListener {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = SchedulesFragmentBinding.inflate(inflater, container, false)
         return binding.root
     }

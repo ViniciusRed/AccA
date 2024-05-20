@@ -45,7 +45,7 @@ import java.util.*
 
 class BatteryDialogActivity : ScopedAppActivity()
 {
-    private var widgetId: Int = -1;
+    private var widgetId: Int = -1
     private var isAccdRunning: Boolean = false
     private var isAccdInstalled: Boolean = false
     private var manualStop: Boolean = false

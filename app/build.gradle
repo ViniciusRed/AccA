@@ -1,15 +1,15 @@
 plugins {
-  id 'com.android.application'
-  id 'kotlin-android'
-  id 'kotlin-parcelize'
-  id 'com.google.devtools.ksp' version '1.8.22-1.0.11'
+    id 'com.android.application'
+    id 'kotlin-android'
+    id 'kotlin-parcelize'
+    id 'com.google.devtools.ksp' version '1.9.23-1.0.20'
 }
 
 android {
     defaultConfig {
         compileSdkVersion 34
         applicationId "mattecarra.accapp"
-        minSdkVersion 30
+        minSdk 29
         targetSdkVersion 33
         versionCode 39
         versionName "1.0.36-dev"
@@ -18,7 +18,7 @@ android {
         multiDexEnabled true
 
         ksp {
-                arg("room.schemaLocation", "$projectDir/schemas".toString())
+            arg("room.schemaLocation", "$projectDir/schemas".toString())
         }
     }
     buildTypes {
@@ -41,6 +41,7 @@ android {
         jvmTarget = JavaVersion.VERSION_17.toString()
     }
     buildFeatures {
+        buildConfig true
         dataBinding true
         viewBinding true
     }
@@ -58,10 +59,10 @@ dependencies {
     implementation "androidx.multidex:multidex:$versions.multidex"
 
     implementation "androidx.appcompat:appcompat:1.6.1"
-    implementation "androidx.core:core-ktx:1.13.0"
+    implementation 'androidx.core:core-ktx:1.13.1'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     implementation "androidx.legacy:legacy-support-v4:1.0.0"
-    implementation "androidx.vectordrawable:vectordrawable:1.1.0"
+    implementation 'androidx.vectordrawable:vectordrawable:1.2.0'
     implementation "androidx.preference:preference-ktx:1.2.1"
     implementation "androidx.cardview:cardview:1.0.0"
 
@@ -109,12 +110,12 @@ dependencies {
     implementation "androidx.browser:browser:$versions.browser"
 
     // Kotlin JSON Library for exporting and importing
-    implementation 'com.squareup.moshi:moshi:1.15.0'
-    implementation 'com.squareup.moshi:moshi-kotlin:1.15.0'
-    ksp "com.squareup.moshi:moshi-kotlin-codegen:1.15.0"
+    implementation 'com.squareup.moshi:moshi:1.15.1'
+    implementation 'com.squareup.moshi:moshi-kotlin:1.15.1'
+    ksp 'com.squareup.moshi:moshi-kotlin-codegen:1.15.1'
 
 
     // Fragment KTX module
-    implementation "androidx.fragment:fragment-ktx:1.6.2"
+    implementation 'androidx.fragment:fragment-ktx:1.7.0'
 
 }

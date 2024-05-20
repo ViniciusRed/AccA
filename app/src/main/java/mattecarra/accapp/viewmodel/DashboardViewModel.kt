@@ -21,7 +21,7 @@ class DashboardViewModel : ViewModel() {
     }
 
     init {
-        viewModelScope.launch() {
+        viewModelScope.launch {
             while (true) {
                 if (dashboard.hasActiveObservers()) {
                     dashboard.value = DashboardValues(

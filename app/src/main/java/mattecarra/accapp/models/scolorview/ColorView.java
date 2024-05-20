@@ -19,9 +19,9 @@ import mattecarra.accapp.R;
  * This class may be used as a standalone color preview also.
  */
 public class ColorView extends View {
-    private Paint mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-    private BitmapShader mShader;
-    private Path mClipPath = new Path();
+    private final Paint mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+    private final BitmapShader mShader;
+    private final Path mClipPath = new Path();
     private int mColor;
 
     {

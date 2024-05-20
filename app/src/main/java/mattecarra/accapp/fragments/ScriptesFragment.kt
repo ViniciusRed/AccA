@@ -47,7 +47,7 @@ class ScriptesFragment : ScopedFragment(), OnScriptClickListener
     private lateinit var mScriptsViewModel: ScriptsViewModel
     private lateinit var mScriptesAdapter: ScriptListAdapter
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View?
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View
     {
         return ScriptsFragmentBinding.inflate(inflater, container, false).root
     }
@@ -231,7 +231,7 @@ class ScriptesFragment : ScopedFragment(), OnScriptClickListener
 
             val binding = MdRunScriptBinding.inflate(layoutInflater)
             customView(view = binding.root, scrollable = true)
-            binding.mdRunContent.setText(script.scBody)
+            binding.mdRunContent.text = script.scBody
             binding.mdStatusPb.visibility = View.VISIBLE
 
             launch {
@@ -248,7 +248,7 @@ class ScriptesFragment : ScopedFragment(), OnScriptClickListener
                         binding.mdStatusPb.visibility = View.INVISIBLE
                     }
 
-                    binding.mdOutContent.setText(script.scOutput)
+                    binding.mdOutContent.text = script.scOutput
                     binding.mdOutContent.visibility = View.VISIBLE
                 }
             }

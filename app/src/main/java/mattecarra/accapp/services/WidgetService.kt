@@ -82,7 +82,7 @@ class WidgetService : Service(), OnAdvWidgetInterface
             }
         }
 
-        return START_STICKY;
+        return START_STICKY
     }
 
     override fun onDestroy()

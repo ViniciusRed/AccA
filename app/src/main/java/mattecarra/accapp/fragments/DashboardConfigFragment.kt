@@ -25,7 +25,8 @@ import mattecarra.accapp.utils.ScopedFragment
 import mattecarra.accapp.viewmodel.ProfilesViewModel
 import mattecarra.accapp.viewmodel.SharedViewModel
 
-class DashboardConfigFragment() : ScopedFragment(), SharedPreferences.OnSharedPreferenceChangeListener  {
+class DashboardConfigFragment : ScopedFragment(),
+    SharedPreferences.OnSharedPreferenceChangeListener {
     private lateinit var mContext: Context
     private lateinit var mViewModel: ProfilesViewModel
     private lateinit var mSharedViewModel: SharedViewModel
@@ -36,43 +37,49 @@ class DashboardConfigFragment() : ScopedFragment(), SharedPreferences.OnSharedPr
     private var _binding: ProfilesItemBinding? = null
     private val binding get() = _binding!!
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?)
-    {
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        if (requestCode == 7 && resultCode == Activity.RESULT_OK && data?.getBooleanExtra(Constants.ACC_HAS_CHANGES, false) == true)
-        {
-            LogExt().d(javaClass.simpleName,"onActivityResult(): ACC_HAS_CHANGES=true")
+        if (requestCode == 7 && resultCode == Activity.RESULT_OK && data?.getBooleanExtra(
+                Constants.ACC_HAS_CHANGES,
+                false
+            ) == true
+        ) {
+            LogExt().d(javaClass.simpleName, "onActivityResult(): ACC_HAS_CHANGES=true")
 
             launch {
                 mSharedViewModel.updateAccConfig(data.getSerializableExtra(Constants.ACC_CONFIG_KEY) as AccConfig) //TODO: Check assertion
                 // Remove the current selected profile
                 mSharedViewModel.clearCurrentSelectedProfile()
 
-                updateInfo(getString(R.string.profile_not_selected), data.getSerializableExtra(Constants.ACC_CONFIG_KEY) as AccConfig)
+                updateInfo(
+                    getString(R.string.profile_not_selected),
+                    data.getSerializableExtra(Constants.ACC_CONFIG_KEY) as AccConfig
+                )
             }
         }
     }
 
-    companion object
-    {
+    companion object {
         fun newInstance() = DashboardConfigFragment()
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View?
-    {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
         _binding = ProfilesItemBinding.inflate(inflater, container, false)
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?)
-    {
-        LogExt().d(javaClass.simpleName,"onViewCreated()")
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        LogExt().d(javaClass.simpleName, "onViewCreated()")
         super.onViewCreated(view, savedInstanceState)
 
-        binding.itemProfileLoadImage.visibility = View.VISIBLE;
-        binding.itemProfileInfo.visibility = View.GONE;
-        binding.editConfigButton.visibility = View.VISIBLE;
+        binding.itemProfileLoadImage.visibility = View.VISIBLE
+        binding.itemProfileInfo.visibility = View.GONE
+        binding.editConfigButton.visibility = View.VISIBLE
 
         mContext = requireContext()
         mViewModel = ViewModelProvider(this).get(ProfilesViewModel::class.java)
@@ -81,7 +88,7 @@ class DashboardConfigFragment() : ScopedFragment(), SharedPreferences.OnSharedPr
         mPrefs = PreferenceManager.getDefaultSharedPreferences(context)
         mPrefs.registerOnSharedPreferenceChangeListener(this)
 
-        view.setOnClickListener(View.OnClickListener {
+        view.setOnClickListener({
             startAccConfigEditorActivity()
         })
 
@@ -92,13 +99,11 @@ class DashboardConfigFragment() : ScopedFragment(), SharedPreferences.OnSharedPr
         checkProfile()
     }
 
-    private fun startAccConfigEditorActivity()
-    {
+    private fun startAccConfigEditorActivity() {
         startActivityForResult(Intent(context, AccConfigEditorActivity::class.java), 7)
     }
 
-    fun checkProfile()
-    {
+    fun checkProfile() {
         launch {
 
             val profileId = ProfileUtils.getCurrentProfile(mPrefs)
@@ -106,35 +111,39 @@ class DashboardConfigFragment() : ScopedFragment(), SharedPreferences.OnSharedPr
             val selProfile = mViewModel.getProfileById(profileId)
 
             var name = getString(R.string.profile_not_selected)
-            if (selProfile != null && currentConfig == selProfile.accConfig) name = selProfile.profileName
+            if (selProfile != null && currentConfig == selProfile.accConfig) name =
+                selProfile.profileName
 
             updateInfo(name, currentConfig)
         }
     }
 
-    fun updateInfo(nameTitle: String, accConfig: AccConfig)
-    {
+    fun updateInfo(nameTitle: String, accConfig: AccConfig) {
         LogExt().d(javaClass.simpleName, "updateInfo(): name=$nameTitle , accConfig=$accConfig")
 
         binding.itemProfileTitleTextView.text = nameTitle
         binding.itemProfileCapacityTv.text = accConfig.configCapacity.toString(mContext)
 
         binding.itemProfileSwitchLl.isGone = accConfig.configChargeSwitch.isNullOrEmpty()
-        binding.itemProfileSwitchDataTv.text = accConfig.configChargeSwitch ?: mContext.getString(R.string.automatic)
-        binding.itemProfileAutomaticSwitchingTv.isVisible = accConfig.configIsAutomaticSwitchingEnabled
+        binding.itemProfileSwitchDataTv.text =
+            accConfig.configChargeSwitch ?: mContext.getString(R.string.automatic)
+        binding.itemProfileAutomaticSwitchingTv.isVisible =
+            accConfig.configIsAutomaticSwitchingEnabled
 
         //-----------------------------------------------
 
-        binding.itemProfileChargingVoltageLl.isVisible = (accConfig.configVoltage.controlFile != null || accConfig.configVoltage.max != null || accConfig.configCurrMax != null)
+        binding.itemProfileChargingVoltageLl.isVisible =
+            (accConfig.configVoltage.controlFile != null || accConfig.configVoltage.max != null || accConfig.configCurrMax != null)
 
         binding.itemProfileChargingVoltageTv.text = accConfig.configVoltage.toString(mContext)
-        binding.itemProfileCurrentMaxTv.text = mContext.getString(R.string.current_max) +" "+ accConfig.configCurrMax.toString()
+        binding.itemProfileCurrentMaxTv.text =
+            mContext.getString(R.string.current_max) + " " + accConfig.configCurrMax.toString()
 
-        val volt = (accConfig.configVoltage.controlFile != null || accConfig.configVoltage.max != null)
+        val volt =
+            (accConfig.configVoltage.controlFile != null || accConfig.configVoltage.max != null)
         val currmax = accConfig.configCurrMax != null
 
-        if ((volt && !currmax) || (!volt && currmax))
-        {
+        if ((volt && !currmax) || (!volt && currmax)) {
             binding.itemProfileChargingVoltageTv.isVisible = volt
             binding.itemProfileCurrentMaxTv.isVisible = currmax
         }
@@ -162,12 +171,11 @@ class DashboardConfigFragment() : ScopedFragment(), SharedPreferences.OnSharedPr
         binding.itemProfileOptionsIb.visibility = View.GONE
         binding.itemProfileSelectedIndicatorView.isVisible = mActiveProfile
 
-        binding.itemProfileLoadImage.visibility = View.GONE;
-        binding.itemProfileInfo.visibility = View.VISIBLE;
+        binding.itemProfileLoadImage.visibility = View.GONE
+        binding.itemProfileInfo.visibility = View.VISIBLE
     }
 
-    override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences, key: String)
-    {
+    override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
         if (key == Constants.PROFILE_KEY) checkProfile()
     }
 }

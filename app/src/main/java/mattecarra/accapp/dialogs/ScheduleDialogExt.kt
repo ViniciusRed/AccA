@@ -28,9 +28,9 @@ class ProfileSpinnerAdapter : BaseAdapter(), SpinnerAdapter
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View
     {
         val view =  convertView ?: LayoutInflater.from(parent.context).inflate(android.R.layout.simple_spinner_dropdown_item, parent, false)
-        val textView = view.findViewById(android.R.id.text1) as TextView
+        val textView: TextView = view.findViewById(android.R.id.text1)
         textView.text = getItem(position).profileName
-        return view;
+        return view
     }
 
     fun setItems(list: List<AccaProfile>) {

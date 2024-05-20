@@ -40,11 +40,11 @@ import mattecarra.accapp.R;
 
 public class ColorPickerView extends FrameLayout
 {
-    private Bitmap mWhiteBitmap;
-    private Bitmap mRingBitmap;
-    private Bitmap mLineBitmap;
+    private final Bitmap mWhiteBitmap;
+    private final Bitmap mRingBitmap;
+    private final Bitmap mLineBitmap;
 
-    private Point mTempPoint = new Point();
+    private final Point mTempPoint = new Point();
     private TextWatcher mTextWatcher;
     public ColorObserver observer;
     private boolean hasAlpha = false;
@@ -57,8 +57,8 @@ public class ColorPickerView extends FrameLayout
     private float mXCoordSaturation, mYCoordSaturation;
     private float mYCoordAlpha;
 
-    private TextView prefixView;
-    private TextView hexView;
+    private final TextView prefixView;
+    private final TextView hexView;
 
     public ColorPickerView(Context context)
     {
@@ -142,9 +142,9 @@ public class ColorPickerView extends FrameLayout
 
         hue.setBackground(new Drawable()
         {
-            private Paint mPaint = new Paint();
-            private Rect mDstRect = new Rect();
-            private int[] mColors = new int[]{0xffff0000, 0xffff00ff, 0xff0000ff, 0xff00ffff, 0xff00ff00, 0xffffff00, 0xffff0000};
+            private final Paint mPaint = new Paint();
+            private final Rect mDstRect = new Rect();
+            private final int[] mColors = new int[]{0xffff0000, 0xffff00ff, 0xff0000ff, 0xff00ffff, 0xff00ff00, 0xffffff00, 0xffff0000};
 
             @Override
             public void draw(Canvas canvas)
@@ -210,9 +210,9 @@ public class ColorPickerView extends FrameLayout
         saturation.setBackground(new Drawable()
         {
             private final int RESOLUTION = 8;
-            private float[] verts = new float[((RESOLUTION + 1) * (RESOLUTION + 1)) * 2];
-            private int[] colors = new int[((RESOLUTION + 1) * (RESOLUTION + 1))];
-            private Paint mPaint;
+            private final float[] verts = new float[((RESOLUTION + 1) * (RESOLUTION + 1)) * 2];
+            private final int[] colors = new int[((RESOLUTION + 1) * (RESOLUTION + 1))];
+            private final Paint mPaint;
 
             {
                 mPaint = new Paint();
@@ -234,7 +234,7 @@ public class ColorPickerView extends FrameLayout
                     {
                         verts[index] = x * width / RESOLUTION;
                         verts[index + 1] = y * height / RESOLUTION;
-                        colors[index / 2] = mix(0xff000000, mix(mHueColor, 0xffffffff, (float) verts[index] / width), (float) verts[index + 1] / height);
+                        colors[index / 2] = mix(0xff000000, mix(mHueColor, 0xffffffff, verts[index] / width), verts[index + 1] / height);
                         index += 2;
                     }
                 }
@@ -284,10 +284,10 @@ public class ColorPickerView extends FrameLayout
 
         alpha.setBackground(new Drawable()
         {
-            private Paint mPaint = new Paint();
-            private Rect mDstRect = new Rect();
+            private final Paint mPaint = new Paint();
+            private final Rect mDstRect = new Rect();
 
-            private BitmapShader mShader;
+            private final BitmapShader mShader;
             {
                 mShader = new BitmapShader(BitmapFactory.decodeResource(getContext().getResources(), R.drawable.checker), Shader.TileMode.REPEAT, Shader.TileMode.REPEAT);
                 mPaint.setColor(0xffffffff);

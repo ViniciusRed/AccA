@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import mattecarra.accapp.R
 import mattecarra.accapp.models.ProfileEntry
 
-class ProfileEntriesAdapter() : RecyclerView.Adapter<ProfileEntryHolder>() {
+class ProfileEntriesAdapter : RecyclerView.Adapter<ProfileEntryHolder>() {
 
     private var mEntries: MutableList<ProfileEntry>
 
@@ -49,7 +49,7 @@ class ProfileEntriesAdapter() : RecyclerView.Adapter<ProfileEntryHolder>() {
 
         for (entry: ProfileEntry in mEntries) {
             if (entry.isChecked()) {
-                entries.add(entry);
+                entries.add(entry)
             }
         }
 

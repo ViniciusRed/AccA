@@ -70,8 +70,8 @@ import java.io.Serializable
     {
         fun toString(context: Context): String
         {
-            return if (Acc.instance.version >= 202002170) context.getString(R.string.voltage_max) +" "+ (max.toString() ?: "-")
-            else context.getString(R.string.voltage_control_file) +" "+ (controlFile.toString() ?: "-")
+            return if (Acc.instance.version >= 202002170) context.getString(R.string.voltage_max) +" "+ max.toString()
+            else context.getString(R.string.voltage_control_file) +" "+ controlFile.toString()
         }
     }
 

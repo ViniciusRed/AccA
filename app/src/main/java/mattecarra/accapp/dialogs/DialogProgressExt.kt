@@ -28,9 +28,7 @@ import mattecarra.accapp.databinding.MdDialogProgressIndeterminateBinding
  */
 @CheckResult fun MaterialDialog.getTextView(): TextView {
     val binding = MdDialogProgressIndeterminateBinding.bind(getProgressLayout())
-    return binding.mdContent ?: throw IllegalStateException(
-        "You have not setup this dialog as an input dialog."
-    )
+    return binding.mdContent
 }
 
 @CheckResult

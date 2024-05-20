@@ -526,7 +526,7 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
     {
         if (ContextCompat.checkSelfPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)
             if (!ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.WRITE_EXTERNAL_STORAGE))
-                ActivityCompat.requestPermissions(this, Array(1){ Manifest.permission.WRITE_EXTERNAL_STORAGE }, 1);
+                ActivityCompat.requestPermissions(this, Array(1){ Manifest.permission.WRITE_EXTERNAL_STORAGE }, 1)
     }
 
     /**
@@ -644,7 +644,6 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
                                     executeOnce,
                                     executeOnBoot,
                                     data.getSerializableExtra(Constants.ACC_CONFIG_KEY) as AccConfig
-                                        ?: return
                                 )
                         }
                     }
@@ -673,7 +672,6 @@ class MainActivity : ScopedAppActivity(), BottomNavigationView.OnNavigationItemS
                                     executeOnce,
                                     executeOnBoot,
                                     data.getSerializableExtra(Constants.ACC_CONFIG_KEY) as AccConfig
-                                        ?: return
                                 )
                         }
                     }

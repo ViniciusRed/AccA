@@ -142,7 +142,7 @@ object Djs {
         }
     }
 
-    suspend fun uninstallDjs(installationDir: File): Shell.Result? = withContext(Dispatchers.IO) {
+    suspend fun uninstallDjs(installationDir: File): Shell.Result = withContext(Dispatchers.IO) {
         Shell.su("sh ${File(installationDir, "djs/uninstall.sh").absolutePath}").exec()
     }
 

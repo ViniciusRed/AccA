@@ -163,7 +163,7 @@ object Acc {
         var microAmpere = 0
 
         for (i in 0..10) {
-            val batteryInfo = Acc.instance.getBatteryInfo()
+            val batteryInfo = instance.getBatteryInfo()
             if(batteryInfo.getRawVoltageNow() > 1000000) microVolts++
             if(abs(batteryInfo.getRawCurrentNow()) > 10000) microAmpere++
             delay(250)

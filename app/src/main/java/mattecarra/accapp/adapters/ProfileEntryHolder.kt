@@ -10,7 +10,7 @@ import mattecarra.accapp.models.ProfileEntry
 class ProfileEntryHolder: RecyclerView.ViewHolder, ProfileEntry.Listener {
     private var mNameTv: TextView
     private var mCheckbox: CheckBox
-    private lateinit var mProfileEntry: ProfileEntry;
+    private lateinit var mProfileEntry: ProfileEntry
 
     constructor(view: View) : super(view) {
         mNameTv = view.findViewById(R.id.pex_item_name_tv)
@@ -23,7 +23,7 @@ class ProfileEntryHolder: RecyclerView.ViewHolder, ProfileEntry.Listener {
         mProfileEntry = profileEntry
 
         val context = itemView.context
-        mNameTv.setText(profileEntry.getName())
+        mNameTv.text = profileEntry.getName()
         mCheckbox.isChecked = profileEntry.isChecked()
     }
 

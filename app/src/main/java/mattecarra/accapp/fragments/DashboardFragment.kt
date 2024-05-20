@@ -54,7 +54,7 @@ class DashboardFragment : ScopedFragment()
     private lateinit var preferences: Preferences
     private var mIsDaemonRunning: Boolean? = null
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View?
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View
     {
         binding = DashboardFragmentBinding.inflate(inflater, container, false)
         return binding.root
@@ -141,7 +141,7 @@ class DashboardFragment : ScopedFragment()
                 binding.dashDaemonRestartButton.isEnabled = false
 
                 val observer = Observer<DashboardValues> { daemonInfo ->
-                    if (daemonInfo?.daemon == !stopDaemon && !finished.getAndSet(true))
+                    if (daemonInfo.daemon == !stopDaemon && !finished.getAndSet(true))
                     { //if accDeamon status is the opposite of the status it had before the action -> change had effect
                         finished.set(true)
 

@@ -67,7 +67,7 @@ class ProfilesFragment : ScopedFragment(),
         {
             launch {
 
-                val uid = data.getIntExtra(Constants.PROFILE_ID_KEY, -1) as Int
+                val uid = data.getIntExtra(Constants.PROFILE_ID_KEY, -1)
                 val newConfig = data.getSerializableExtra(Constants.ACC_CONFIG_KEY) as AccConfig
                 val newProfile = data.getSerializableExtra(Constants.PROFILE_CONFIG_KEY) as AccaProfile
 
@@ -77,7 +77,7 @@ class ProfilesFragment : ScopedFragment(),
         }
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View?
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View
     {
         return ProfilesFragmentBinding.inflate(inflater, container, false).root
     }
@@ -93,17 +93,17 @@ class ProfilesFragment : ScopedFragment(),
 
         val prefs: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
 
-        mSharedViewModel = ViewModelProvider(this).get(SharedViewModel::class.java)
+        mSharedViewModel = ViewModelProvider(this)[SharedViewModel::class.java]
         mProfilesAdapter = ProfileListAdapter(mContext, ProfileUtils.getCurrentProfile(prefs))
         mProfilesAdapter.setOnClickListener(this)
 
         profilesRecycler.adapter = mProfilesAdapter
         profilesRecycler.layoutManager = LinearLayoutManager(mContext)
 
-        mProfilesViewModel = ViewModelProvider(this).get(ProfilesViewModel::class.java)
+        mProfilesViewModel = ViewModelProvider(this)[ProfilesViewModel::class.java]
 
         // Observe data
-        mProfilesViewModel.getLiveData().observe(viewLifecycleOwner, Observer { profiles ->
+        mProfilesViewModel.getLiveData().observe(viewLifecycleOwner, { profiles ->
             if (profiles.isEmpty()) {
                 binding.profilesEmptyTextview.visibility = View.VISIBLE
                 profilesRecycler.visibility = View.GONE
@@ -199,26 +199,24 @@ class ProfilesFragment : ScopedFragment(),
                 actionState: Int, isCurrentlyActive: Boolean
             ) {
 
-                recyclerView.setOnTouchListener(object : View.OnTouchListener {
-                    override fun onTouch(v: View?, event: MotionEvent?): Boolean {
-                        when (event?.action) {
-                            MotionEvent.ACTION_CANCEL -> swipeBack = true
-                            MotionEvent.ACTION_UP -> swipeBack = true
-                        }
-
-                        if (swipeBack) {
-
-                            if (dX > 300) { // If slid towards right > 300px?, adjust for sensitivity
-                                onProfileClick(mProfilesAdapter.getProfileAt(viewHolder.adapterPosition))
-                            }
-                            if (dX < -300) { // Show right side
-                                onProfileClick(mProfilesAdapter.getProfileAt(viewHolder.adapterPosition))
-                            }
-                        }
-
-                        return false
+                recyclerView.setOnTouchListener { v, event ->
+                    when (event?.action) {
+                        MotionEvent.ACTION_CANCEL -> swipeBack = true
+                        MotionEvent.ACTION_UP -> swipeBack = true
                     }
-                })
+
+                    if (swipeBack) {
+
+                        if (dX > 300) { // If slid towards right > 300px?, adjust for sensitivity
+                            onProfileClick(mProfilesAdapter.getProfileAt(viewHolder.adapterPosition))
+                        }
+                        if (dX < -300) { // Show right side
+                            onProfileClick(mProfilesAdapter.getProfileAt(viewHolder.adapterPosition))
+                        }
+                    }
+
+                    false
+                }
             }
 
             override fun convertToAbsoluteDirection(flags: Int, layoutDirection: Int): Int
@@ -232,22 +230,23 @@ class ProfilesFragment : ScopedFragment(),
         itemTouchHelper.attachToRecyclerView(profilesRecycler)
     }
 
-    override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences, key: String)
-    {
-        if (key == Constants.PROFILE_KEY)
-        {
-            launch {
-                val profileId = ProfileUtils.getCurrentProfile(sharedPreferences)
-                val currentConfig = Acc.instance.readConfig()
-                val selectedProfileConfig = mProfilesViewModel.getProfileById(profileId)?.accConfig
+    override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
+        if (sharedPreferences != null) {
+            // Handle shared preference changes here
+            if (key == Constants.PROFILE_KEY) {
+                launch {
+                    val profileId = ProfileUtils.getCurrentProfile(sharedPreferences)
+                    val currentConfig = Acc.instance.readConfig()
+                    val selectedProfileConfig =
+                        mProfilesViewModel.getProfileById(profileId)?.accConfig
 
-                if (profileId != -1 && currentConfig != selectedProfileConfig)
-                    ProfileUtils.clearCurrentSelectedProfile(sharedPreferences)
-                else mProfilesAdapter.setActiveProfile(profileId)
+                    if (profileId != -1 && currentConfig != selectedProfileConfig)
+                        ProfileUtils.clearCurrentSelectedProfile(sharedPreferences)
+                    else mProfilesAdapter.setActiveProfile(profileId)
+                }
             }
         }
     }
-
     /**
      * Override function for handling ProfileOnClicks
      * Applies the selected profile as CURRENT!
